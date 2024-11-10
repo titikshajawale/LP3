@@ -17,6 +17,44 @@
 
 # if __name__=="__main__":
 #     fractional_knapsack()
+-----------------------------------------------------------------------------------------------------------------------
+class ItemValue:
+    def __init__(self , wt_ , val_ , ind_):
+        self.wt = wt_
+        self.val = val_
+        self.ind = ind_
+        self.cost = val_ // wt_
+
+    def __lt__(self ,other):
+        return self.cost < other.cost
+
+
+def fractionalKnapSack(wt , val , capacity):
+
+    ival = [ItemValue(wt[i] , val[i] , i) for i in range(len(wt))]
+    ival.sort(reverse=True)
+    totalvalue = 0
+    for i in ival:
+        curwt = i.wt
+        curval = i.val
+        if capacity-curwt >= 0:
+            capacity-=curwt
+            totalvalue += curval
+        else:
+            fraction = capacity / curwt
+            totalvalue += curval * fraction 
+            break
+    return totalvalue
+
+wt = [20, 10, 30]
+val = [100, 60, 120]
+capacity = 50
+maxvalue = fractionalKnapSack(wt , val , capacity)
+print("Maximaum value = " , maxvalue)
+
+--------------------------------------------------------------------------------------------------------------------------
+    
+
 class Item:
     def __init__(self, weight,value):
         self.weight= weight
